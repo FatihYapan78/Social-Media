@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Giriş Yap{% endblock title %}
+
+
+{% block style %}
+    <style>
+        body{
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+        }
+        input{
+            padding: 0.5rem !important;
+            color: white !important;
+            border: 1px solid black !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+        }
+        input::placeholder{
+            color: white !important;
+        }
+        input:focus{
+            box-shadow: 0 0 30px red !important;
+        }
+        img{
+            border-radius: 10px;
+            box-shadow: 10px 10px 50px black;
+        }
+        form{
+            border-radius: 10px;
+            padding: 50px;
+            box-shadow: 10px 10px 50px black;
+        }
+    </style>
+{% endblock style %}
+    
+    
+
+{% block body %}
+{% if messages %}
+<div class="messages position-absolute top-0 start-0 w-100">
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+</div>
+{% endif %}
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="row w-100 h-50 d-flex justify-content-center align-items-center">
+            <div class="col d-md-block d-none">
+                <img src="{% static 'image/login-image-1.jpg' %}" alt="">
+            </div>
+            <div class="col">
+                <form method="post">
+                    {% csrf_token %}
+                    <h1 class="text-light">Giriş Yap</h1>
+                    <input type="email" id="emailtel" name="emailandtel" class="form-control" placeholder="E-Posta Adresi">
+                    <button type="button" id="change" class="btn text-light text-decoration-underline" onclick="typechange()">Telefon Numarası İle Giriş Yapmak İstiyorum.</button>
+                    <input type="password" name="password" class="form-control mt-3" placeholder="Parola">
+                    <button type="submit" class="btn btn-dark mt-3 w-100 p-2">Giriş Yap</button>
+                    <div class="text-end mt-2 text-light">Şifremi Unuttum ? </div>
+                    <p class="text-center mt-3 fs-5 text-light">Kayıt Olmadın mı? <a href="{% url 'register' %}" class="text-light">Kayıt Ol</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {% block script %}
+    <script>
+        emailtel = document.getElementById('emailtel')
+        btnchange = document.getElementById('change')
+        function typechange(){
+            if  (emailtel.type === "email"){
+                emailtel.type = "tel"
+                emailtel.pattern = "[0-9]{10}"
+                emailtel.placeholder = "555_______"
+                btnchange.innerHTML = "E-Mail İle Giriş Yapmak İstiyorum."
+            }
+            else{
+                emailtel.type = "email"
+                emailtel.placeholder = "E-Mail Adresi"
+                btnchange.innerHTML = "Telefon Numarası İle Giriş Yapmak İstiyorum."
+            }
+        }
+    </script>
+        
+    {% endblock script %}
+        
+{% endblock body %}

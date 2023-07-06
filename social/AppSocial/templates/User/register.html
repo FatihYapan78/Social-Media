@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Kayıt Ol{% endblock title %}
+
+
+{% block style %}
+    <style>
+        body{
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+        }
+        input{
+            padding: 0.5rem !important;
+            color: white !important;
+            border: 1px solid black !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+        }
+        input::placeholder{
+            color: white !important;
+        }
+        input:focus{
+            box-shadow: 0 0 30px red !important;
+        }
+        img{
+            border-radius: 10px;
+            box-shadow: 10px 10px 50px black;
+        }
+        form{
+            border-radius: 10px;
+            padding: 50px;
+            box-shadow: 10px 10px 50px black;
+        }
+    </style>
+{% endblock style %}
+    
+    
+
+{% block body %}
+{% if messages %}
+<div class="messages position-absolute top-0 start-0 w-100">
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="row w-75 h-100 d-flex justify-content-center align-items-center">
+        <!-- <div class="col d-md-block d-none">
+            <img src="{% static 'image/login-image-1.jpg' %}" alt="">
+        </div> -->
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                <h1 class="text-light">Kayıt Ol</h1>
+                <input type="text" name="name" class="form-control mt-3" placeholder="Ad" required>
+                <input type="text" name="surname" class="form-control mt-3" placeholder="Soyad" required>
+                <input type="email" name="email" class="form-control mt-3" placeholder="E-Posta Adresi" required>
+                <input type="tel" name="tel" class="form-control mt-3" placeholder="555________" pattern="[0-9]{10}">
+                <input type="date" name="date" class="form-control mt-3" placeholder="Doğum Tarihi">
+                <ul class="text-light my-3">
+                    <li>Şifre En Az 6 Karakterden Oluşmalıdır.</li>
+                    <li>Şifre En Az Bir Büyük Harf İçermelidir.</li>
+                    <li>Şifre En Az Bir Rakam İçermelidir.</li>
+                    <li>Şifre En Az Bir Tane Özel Karakter !#$%&'()*+,-./:;<=>?@[\]^_`{|}~. İçermelirdir.</li>
+                </ul>
+                <input type="password" name="password" class="form-control mt-3" placeholder="Parola" required>
+                <input type="password" name="password2" class="form-control mt-3" placeholder="Parola Tekrar" required>
+                <button type="submit" class="btn btn-dark mt-3 w-100 p-2">Kayıt Ol</button>
+                <p class="text-center mt-3 fs-5 text-light">Zaten hesabın var mı ? <a href="{% url 'login' %}" class="text-light">Giriş Yap</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}
